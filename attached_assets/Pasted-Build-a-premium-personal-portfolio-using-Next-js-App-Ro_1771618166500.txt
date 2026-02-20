@@ -1,0 +1,345 @@
+Build a premium personal portfolio using:
+
+Next.js (App Router)
+
+TypeScript
+
+TailwindCSS
+
+Framer Motion
+
+No UI component libraries
+
+Clean modular component architecture
+
+Concept:
+
+The website represents a late-night indie lo-fi studio where engineering ideas are composed like music.
+
+This must NOT look like:
+
+A Spotify clone
+
+A DJ website
+
+A neon cyberpunk site
+
+A generic dark dev portfolio
+
+It must feel calm, artistic, warm, and deeply intentional.
+
+🎨 DESIGN SYSTEM
+Mood
+
+Late-night coding session.
+Soft glow desk lamp.
+Muted colors.
+Subtle motion.
+Nothing flashy.
+
+Color Palette
+
+Background: #121212 (soft charcoal, not pure black)
+Secondary Surface: #1A1A1A
+Card Surface: #202020
+
+Primary Accent: #F4A261 (warm amber)
+Secondary Accent: #6C9BD2 (muted blue)
+Highlight: #CDB4DB (dusty lavender, use rarely)
+
+Text:
+Primary: #F5F5F5
+Muted: #A3A3A3
+
+No bright neon.
+No gradients across whole screen.
+Use soft radial glows sparingly.
+
+Typography
+
+Headings: “Space Grotesk” (medium weight)
+Body: “Inter”
+
+Headings slightly spaced.
+Small labels uppercase with letter spacing.
+
+🧠 SITE STRUCTURE
+
+Single-page immersive experience structured like an album.
+
+Floating vertical tracklist on left side (desktop):
+01 — Intro
+02 — Systems
+03 — Projects
+04 — Competition
+05 — Journey
+06 — Connect
+
+On mobile:
+Tracklist collapses into top dropdown.
+
+Smooth scroll transitions.
+Sections fade in gently.
+
+🏠 HERO — “NOW PLAYING”
+
+Full viewport height.
+
+Center content:
+
+Large heading:
+“Engineering Intelligence.”
+
+Subheading:
+AI/ML Engineer crafting systems in silence.
+
+Below:
+Small capsule text:
+Currently composing scalable AI systems & solving hard problems.
+
+Below:
+Two soft buttons:
+[Enter the Studio]
+[View Metrics]
+
+Right side:
+Minimal animated waveform (SVG, subtle, slow breathing motion)
+Waveform reacts slightly to cursor position (gentle parallax)
+
+Bottom-right corner:
+Tiny “ambient toggle” switch:
+When enabled:
+
+Slight animated grain texture overlay
+
+Background radial glow pulses slowly
+When disabled:
+
+Static clean look
+
+No autoplay sound.
+
+🎛 SECTION 01 — INTRO (Track 01)
+
+Minimal typography section.
+
+Short paragraph about mindset:
+Systems thinking.
+Precision.
+Late-night builder energy.
+
+Text fades in softly.
+No hard edges.
+
+🏗 SECTION 02 — SYSTEMS (Track 02)
+
+Layout resembles audio mixing board but abstracted.
+
+Three vertical panels:
+
+AI Systems
+Distributed Architecture
+Optimization Engine
+
+Each panel:
+
+Looks like a soft rectangular channel strip
+
+On hover:
+
+Slight lift
+
+Accent bar glows softly
+
+Internal diagram lines animate in
+
+Inside each panel:
+
+3 bullet capabilities
+
+Minimal schematic-style visual
+
+Subtle animated connector lines between panels.
+
+Motion must feel slow and smooth (spring easing).
+
+🧪 SECTION 03 — PROJECTS (Track 03)
+
+Title:
+“Composed Works”
+
+Projects displayed as album cards in grid.
+
+Each card:
+
+Soft shadow
+
+Warm accent line on top
+
+Title
+
+2-line description
+
+Tech stack tags in muted pill style
+
+On hover:
+
+Card gently tilts (3D rotate small degree)
+
+Soft amber glow increases slightly
+
+Background blur increases subtly
+
+On click:
+Opens centered modal:
+
+Large project title
+
+Description
+
+Architecture diagram placeholder
+
+GitHub link
+
+“Stack” listed like track credits
+
+Modal fades in like crossfade transition.
+
+🏆 SECTION 04 — COMPETITION (Track 04)
+
+Title:
+“Rhythm & Precision”
+
+Top metrics in horizontal layout:
+
+Current Rating
+Peak Rating
+Problems Solved
+Global Rank
+
+Counters animate upward slowly when section enters viewport.
+
+Below:
+Minimal line graph for rating progression.
+Style like audio waveform timeline.
+Muted blue line.
+No grid clutter.
+
+Below:
+Radar chart placeholder for:
+DP
+Graphs
+Math
+Greedy
+Strings
+
+Use muted tones.
+Highest value subtly highlighted in amber.
+
+Animations slow and calm.
+No bounce.
+
+📜 SECTION 05 — JOURNEY (Track 05)
+
+Experience timeline styled like “Tour History”.
+
+Vertical center line.
+
+Each entry:
+
+Year
+
+Role
+
+Organization
+
+2–3 measurable impact bullet points
+
+Entries alternate left/right.
+Fade in softly as user scrolls.
+
+Line animates downward gradually.
+
+🌙 FINAL SECTION — CONNECT (Track 06)
+
+Centered content.
+
+Heading:
+“Let’s Build Something Meaningful.”
+
+Subtext:
+Open to collaborations in AI, systems, and intelligent infrastructure.
+
+Buttons:
+GitHub
+LinkedIn
+Email
+
+Hover:
+Soft glow ring expands slowly.
+
+🎮 GLOBAL INTERACTIONS
+
+Custom cursor:
+
+Small warm amber dot
+
+Slight trailing effect (very subtle)
+
+Expands softly on hover
+
+Scrolling:
+Smooth behavior.
+No snap scrolling.
+
+Section transitions:
+Fade + 15px upward motion.
+Use spring easing.
+
+🧩 BACKGROUND DETAIL
+
+Add extremely subtle grain texture overlay (low opacity).
+
+Add soft radial glow behind hero heading.
+
+Add very faint floating dust particles (very minimal, low opacity).
+
+Nothing distracting.
+
+🧱 COMPONENT STRUCTURE
+
+Create reusable components:
+
+Navbar
+TrackList
+Hero
+IntroSection
+SystemsSection
+ProjectsSection
+CompetitionSection
+JourneySection
+Footer
+CustomCursor
+AmbientToggle
+
+Code must be modular.
+No inline clutter.
+
+🚫 DO NOT
+
+No neon colors
+No loud gradients
+No particle explosion effects
+No generic lorem ipsum
+No excessive animation
+No auto-playing audio
+
+Keep it mature and intentional.
+
+CONTENT STYLE
+
+Tone of writing:
+Calm.
+Thoughtful.
+Confident.
+No hype language.
