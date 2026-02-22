@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useAudioEngine } from "@/hooks/useAudioEngine";
 
 const tracks = [
   { id: "01-intro", title: "Intro" },
@@ -12,6 +13,7 @@ const tracks = [
 
 export function TrackList() {
   const [activeTrack, setActiveTrack] = useState(tracks[0].id);
+  const { triggerSectionTransition } = useAudioEngine();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +23,10 @@ export function TrackList() {
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveTrack(tracks[i].id);
+          if (activeTrack !== tracks[i].id) {
+            setActiveTrack(tracks[i].id);
+            triggerSectionTransition();
+          }
           break;
         }
       }
@@ -29,24 +34,24 @@ export function TrackList() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [activeTrack, triggerSectionTransition]);
 
   const scrollToTrack = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
-      <div className="flex flex-col gap-6 relative">
-        {/* Track Line */}
-        <div className="absolute left-[3px] top-4 bottom-4 w-[1px] bg-border/50 z-[-1]" />
+    <nav className="fixed left-0 top-0 lg:left-8 lg:top-1/2 lg:-translate-y-1/2 z-40 w-full lg:w-auto bg-background/80 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-0 border-b lg:border-none border-border">
+      <div className="flex lg:flex-col gap-4 lg:gap-6 relative p-4 lg:p-0 overflow-x-auto no-scrollbar">
+        {/* Track Line (Desktop) */}
+        <div className="hidden lg:block absolute left-[3px] top-4 bottom-4 w-[1px] bg-border/50 z-[-1]" />
         
         {tracks.map((track, i) => (
           <button
             key={track.id}
             data-testid={`link-track-${track.id}`}
             onClick={() => scrollToTrack(track.id)}
-            className="group flex items-center gap-4 text-left relative"
+            className="group flex items-center gap-3 lg:gap-4 text-left relative shrink-0"
           >
             {/* Indicator Dot */}
             <div className={`w-2 h-2 rounded-full transition-all duration-300 ${

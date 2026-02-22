@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useAmbient } from "./AmbientContext";
+import { useScrollIntensity } from "@/hooks/useScrollIntensity";
 
 export function Hero() {
   const { isAmbient } = useAmbient();
+  const intensity = useScrollIntensity();
 
   return (
     <section id="01-intro" className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
@@ -14,9 +16,19 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
         >
-          <div className="radial-glow animate-pulse" style={{ animationDuration: '8s' }}></div>
+          <div 
+            className="radial-glow animate-pulse" 
+            style={{ 
+              animationDuration: '8s',
+              transform: `translate(-50%, -50%) scale(${1 + intensity * 0.2})`,
+              opacity: 0.5 + intensity * 0.5
+            }} 
+          />
         </motion.div>
       )}
+      
+      {/* Vignette */}
+      <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
 
       <div className="container px-4 md:px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
         
@@ -47,7 +59,7 @@ export function Hero() {
             <div className="flex flex-wrap gap-4">
               <button 
                 data-testid="button-enter-studio"
-                className="px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors duration-300"
+                className="group px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-105 active:scale-95"
                 onClick={() => {
                   document.getElementById('02-systems')?.scrollIntoView({ behavior: 'smooth' });
                 }}
@@ -56,7 +68,7 @@ export function Hero() {
               </button>
               <button 
                 data-testid="button-view-metrics"
-                className="px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-medium hover:bg-secondary/80 border border-border transition-colors duration-300"
+                className="px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-medium hover:bg-secondary/80 border border-border transition-all duration-300"
                 onClick={() => {
                   document.getElementById('04-competition')?.scrollIntoView({ behavior: 'smooth' });
                 }}
@@ -79,23 +91,22 @@ export function Hero() {
             <div className="flex items-center gap-1.5 h-32 w-full">
               {[...Array(24)].map((_, i) => {
                 const isCenter = Math.abs(i - 12) < 4;
-                const height = isCenter 
-                  ? 40 + Math.random() * 60 
-                  : 10 + Math.random() * 30;
+                const baseHeight = isCenter ? 40 : 15;
+                const reactiveBonus = intensity * 40;
                   
                 return (
                   <motion.div
                     key={i}
                     className="w-1.5 bg-primary/40 rounded-full"
                     animate={isAmbient ? {
-                      height: [`${height}%`, `${height * (0.5 + Math.random() * 0.5)}%`, `${height}%`],
+                      height: [`${baseHeight + reactiveBonus}%`, `${(baseHeight + reactiveBonus) * 1.5}%`, `${baseHeight + reactiveBonus}%`],
                       opacity: [0.4, 0.8, 0.4]
                     } : {
-                      height: `${height}%`,
+                      height: `${baseHeight}%`,
                       opacity: 0.4
                     }}
                     transition={{
-                      duration: 2 + Math.random() * 2,
+                      duration: 1.5 + Math.random(),
                       repeat: Infinity,
                       ease: "easeInOut",
                       delay: i * 0.05

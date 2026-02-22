@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { X, Github, ExternalLink, Network } from "lucide-react";
+import { useAudioEngine } from "@/hooks/useAudioEngine";
+import { ProceduralCanvas } from "./ProceduralCanvas";
 
 const projects = [
   {
@@ -39,6 +41,7 @@ const projects = [
 
 export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const { triggerHoverSound } = useAudioEngine();
 
   return (
     <section id="03-projects" className="w-full min-h-screen py-24 flex items-center">
@@ -67,15 +70,15 @@ export function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              whileHover={{ scale: 1.02, rotateX: 2, rotateY: 2 }}
+              whileHover={{ scale: 1.02, rotateX: 1, rotateY: 1 }}
+              onHoverStart={() => triggerHoverSound()}
               onClick={() => setSelectedProject(proj)}
             >
+              <ProceduralCanvas seed={proj.title} />
+              
               {/* Warm accent line on top */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/20 via-primary/80 to-primary/20 opacity-50 group-hover:opacity-100 transition-opacity" />
               
-              {/* Ambient Glow */}
-              <div className="absolute -inset-20 bg-primary/5 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
               <div className="relative z-10">
                 <h3 className="text-2xl font-heading font-medium mb-3 text-foreground group-hover:text-primary transition-colors">
                   {proj.title}
@@ -97,7 +100,6 @@ export function ProjectsSection() {
         </div>
       </div>
 
-      {/* Project Modal */}
       <AnimatePresence>
         {selectedProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
@@ -144,7 +146,6 @@ export function ProjectsSection() {
                   </p>
                 </div>
 
-                {/* Architecture Diagram Placeholder */}
                 <div className="w-full h-64 bg-secondary/30 rounded-xl border border-dashed border-border flex flex-col items-center justify-center mb-10">
                   <Network className="w-10 h-10 text-muted-foreground/50 mb-4" />
                   <span className="text-sm font-mono text-muted-foreground/50">[ Architecture Diagram ]</span>

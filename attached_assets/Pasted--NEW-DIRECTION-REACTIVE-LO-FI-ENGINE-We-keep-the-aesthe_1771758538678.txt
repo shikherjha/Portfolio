@@ -1,0 +1,305 @@
+🎧 NEW DIRECTION: “REACTIVE LO-FI ENGINE”
+
+We keep the aesthetic.
+
+But we integrate:
+
+Tone.js
+
+Web Audio API
+
+Reactive visuals
+
+Meaningful sound
+
+Not autoplay music.
+
+Interactive sound design.
+
+🔥 COMPLETE FOLLOW-UP REPLIT PROMPT
+
+Paste everything below:
+
+Enhance the existing Lo-Fi Engineering Studio portfolio into a fully reactive immersive music-driven experience.
+
+Maintain the existing aesthetic and component architecture but implement the following advanced features:
+
+🎧 CORE CONCEPT SHIFT
+
+Music must become interactive and reactive — not decorative.
+
+The UI must subtly respond to:
+
+Cursor movement
+
+Scroll speed
+
+Section transitions
+
+User interaction
+
+Do NOT autoplay full songs.
+
+Use minimal sound design layers.
+
+🧠 AUDIO ENGINE
+
+Install and integrate Tone.js.
+
+Create a reusable hook:
+
+useAudioEngine()
+
+It should:
+
+Initialize on first user interaction (click)
+
+Create:
+
+Ambient pad synth (low volume)
+
+Soft percussion loop
+
+Vinyl crackle noise (toggleable)
+
+Expose:
+
+triggerHoverSound()
+
+triggerSectionTransition()
+
+setIntensity(level)
+
+toggleAmbient()
+
+Ensure:
+
+Mobile performance optimized
+
+Audio suspended when tab not active
+
+🎛 HERO UPGRADE
+
+Replace static waveform with:
+
+Reactive waveform powered by Tone.js analyser.
+
+Behavior:
+
+Amplitude gently increases on scroll.
+
+Slight pulse when user hovers CTA.
+
+Background radial glow subtly reacts to low-frequency audio.
+
+Add subtle vignette effect.
+
+No loud visualizer bars.
+
+Keep it minimal.
+
+🏗 SYSTEMS SECTION UPGRADE
+
+Each architecture card should:
+
+On hover:
+
+Play soft synth pluck (very subtle)
+
+Slight pulse glow animation
+
+Internal diagram lines animate sequentially
+
+On click:
+
+Low frequency sweep sound
+
+Connector lines between cards:
+
+Pulse slowly in sync with ambient pad
+
+🧪 PROJECTS SECTION — GENERATIVE ALBUM COVERS
+
+For each project card:
+
+Generate abstract procedural background using:
+
+Canvas
+
+Noise function
+
+Project metadata as seed
+
+Examples:
+
+AI projects → flowing curves
+
+Systems projects → structured grid
+
+CP projects → geometric sharp patterns
+
+Hover:
+
+Slight 3D tilt
+
+Light shimmer effect
+
+Short pluck sound
+
+Click:
+Modal fades in with soft crossfade audio cue.
+
+🏆 COMPETITION SECTION — RHYTHMIC METRICS
+
+Upgrade radar chart:
+
+Pulse softly in sync with ambient beat
+
+Highest metric glows slightly brighter
+
+Line chart animates with easing curve
+
+Add new feature:
+
+When user hovers a metric:
+
+That metric subtly emits sound pulse
+
+Chart responds with micro ripple
+
+Do not overdo animation.
+
+🌙 AMBIENT MODE EVOLUTION
+
+Upgrade toggle to:
+
+Three states:
+
+Minimal Mode
+
+No audio
+
+Static background
+
+Studio Mode
+
+Ambient pad + soft beat
+
+Reactive glow
+
+Deep Focus Mode
+
+Ambient only
+
+Reduced motion
+
+Lower contrast visuals
+
+Switching modes:
+Smooth 400ms crossfade audio + visual transition.
+
+🎮 CURSOR UPGRADE
+
+Cursor behavior:
+
+Small amber dot
+
+Very subtle trailing blur
+
+On hover:
+
+Expands
+
+Plays soft micro pluck
+
+On rapid mouse movement:
+
+Slight intensity increase in background pulse
+
+No exaggerated trails.
+
+🧩 SCROLL-BASED INTENSITY SYSTEM
+
+Create global scroll intensity state:
+
+Intensity = function of:
+
+Scroll velocity
+
+Section depth
+
+Pass intensity to:
+
+Audio engine
+
+Background glow
+
+Particle opacity
+
+This makes the page feel alive.
+
+📱 RESPONSIVE FIXES
+
+Fix sidebar overlap:
+
+Sidebar fixed width 96px desktop
+
+main container margin-left 96px
+
+On screen <1024px:
+
+Sidebar collapses into top horizontal nav
+
+Tracklist becomes scrollable horizontal list
+
+Ensure:
+No content hidden behind sidebar.
+No overlapping on resize.
+
+🧱 PERFORMANCE REQUIREMENTS
+
+Use requestAnimationFrame for canvas visuals
+
+Throttle scroll listener
+
+Avoid re-render loops
+
+Lazy initialize audio engine
+
+Reduce particle count on mobile
+
+🎨 REFINEMENT
+
+Tone must stay:
+
+Calm.
+Minimal.
+Controlled.
+
+No EDM vibes.
+No bouncing bars.
+No chaotic spectrum analyzers.
+
+It should feel like:
+Engineering inside a quiet studio.
+
+BONUS (IF PERFORMANCE ALLOWS)
+
+Add hidden interaction:
+
+If user clicks rapidly 5 times:
+Reveal “Hidden Track”
+Show experimental project or fun easter egg.
+
+Keep it subtle.
+
+CODE STRUCTURE
+
+Add:
+
+hooks/useAudioEngine.ts
+hooks/useScrollIntensity.ts
+components/AudioVisualizer.tsx
+components/ProceduralCanvas.tsx
+
+Keep everything modular.
