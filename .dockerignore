@@ -1,0 +1,10 @@
+.git
+.venv
+venv
+node_modules
+client
+dist
+attached_assets
+*.log
+.env
+.local

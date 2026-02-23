@@ -37,7 +37,7 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
     target: 'esnext',
     minify: 'esbuild',
@@ -47,7 +47,6 @@ export default defineConfig({
           'vendor-react': ['react', 'react-dom'],
           'vendor-utils': ['framer-motion', 'zustand', 'lucide-react', 'react-icons'],
           'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-          'vendor-audio': ['tone']
         }
       }
     }
