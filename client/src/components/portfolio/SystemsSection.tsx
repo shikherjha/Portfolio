@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useAudioEngine } from "@/hooks/useAudioEngine";
 import {
   SiPython, SiGo, SiCplusplus, SiGnubash, SiLinux, SiGit,
   SiFastapi, SiReact, SiDocker, SiRedis, SiAmazonwebservices,
@@ -51,8 +50,6 @@ const skillGroups = [
 ];
 
 function SkillPill({ name, icon, index }: { name: string, icon: React.ReactNode, index: number }) {
-  const { triggerHoverSound } = useAudioEngine();
-
   return (
     <motion.div
       className="group relative flex items-center gap-2 px-4 py-2.5 rounded-full bg-card/40 border border-border/50 hover:bg-card hover:border-border cursor-pointer overflow-hidden transition-all shadow-sm hover:shadow-[0_0_15px_hsla(var(--primary)/0.15)]"
@@ -61,7 +58,6 @@ function SkillPill({ name, icon, index }: { name: string, icon: React.ReactNode,
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, type: "spring", stiffness: 300 }}
       whileHover={{ y: -2 }}
-      onHoverStart={() => triggerHoverSound()}
     >
       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
       <div className="relative z-10 text-muted-foreground group-hover:text-primary transition-colors group-hover:rotate-12 group-hover:scale-110 duration-300">
