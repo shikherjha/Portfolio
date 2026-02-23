@@ -94,10 +94,10 @@ function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: nu
 
   return (
     <div className={`${isDesktop ? 'w-[100vw] h-[100vh] flex-shrink-0' : 'w-full'} flex items-center justify-center`}>
-      <div className="w-full h-full flex flex-col md:flex-row items-center justify-center p-6 md:p-12 gap-12 lg:gap-24 max-w-[1400px] mx-auto overflow-hidden">
+      <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center p-6 md:p-12 lg:pt-32 gap-12 lg:gap-24 max-w-[1400px] mx-auto overflow-hidden">
 
         {/* Left: Album Cover & Disc */}
-        <div className="relative w-full max-w-[280px] md:max-w-[400px] lg:max-w-[500px] aspect-square flex-shrink-0 group">
+        <div className="relative w-full max-w-[280px] md:max-w-[340px] lg:max-w-[420px] xl:max-w-[500px] aspect-square flex-shrink-0 group">
 
           {/* Vinyl Disc (sits beneath cover and slides out) */}
           <motion.div
@@ -294,7 +294,7 @@ export function ProjectsSection() {
               <span className="text-sm font-mono uppercase tracking-widest text-primary opacity-80 block mb-2 md:mb-4">
                 Discography — Projects
               </span>
-              <h2 className="text-3xl md:text-5xl font-heading font-medium tracking-tight text-foreground/90">
+              <h2 className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-heading font-medium tracking-tight text-foreground/90">
                 Featured Tracks
               </h2>
             </div>
