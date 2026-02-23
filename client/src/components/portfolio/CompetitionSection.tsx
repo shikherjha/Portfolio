@@ -116,31 +116,43 @@ export function CompetitionSection() {
             {platforms.map((plat: any, i: number) => (
               <motion.div
                 key={plat.name}
-                className="flex items-center justify-between p-4 md:p-6 rounded-xl bg-card border border-border/60 hover:border-primary/40 transition-colors group cursor-default shadow-sm hover:shadow-md"
+                className="flex items-center justify-between p-4 md:p-6 rounded-xl bg-card/60 backdrop-blur-sm border border-border/40 hover:border-primary/30 transition-all duration-500 group cursor-default shadow-sm hover:shadow-lg relative overflow-hidden"
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 + i * 0.1 }}
               >
-                <div className="flex items-center gap-6">
+                {/* Subtle Hover Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+
+                <div className="flex items-center gap-6 relative z-10">
                   {/* Score Badge */}
-                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-background border border-border flex items-center justify-center shadow-inner group-hover:border-primary/30 transition-colors">
-                    <span className={`text-xl md:text-2xl font-heading font-semibold ${plat.color}`}>
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-background/80 border border-border/60 flex items-center justify-center shadow-inner group-hover:border-primary/40 transition-all duration-500">
+                    <span className={`text-xl md:text-2xl font-heading font-semibold ${plat.color} drop-shadow-[0_0_12px_rgba(currentcolor,0.3)]`}>
                       {plat.score}
                     </span>
                   </div>
 
                   {/* Platform Details */}
-                  <div className="flex flex-col justify-center gap-1">
-                    <h4 className="font-heading text-lg md:text-xl text-foreground font-medium group-hover:text-primary transition-colors leading-none">
+                  <div className="flex flex-col justify-center gap-2">
+                    <h4 className="font-heading text-lg md:text-xl text-foreground font-medium group-hover:text-primary transition-colors leading-none tracking-tight">
                       {plat.name}
                     </h4>
-                    <span className="text-[10px] md:text-xs font-mono uppercase text-muted-foreground tracking-widest font-semibold">
-                      {plat.rawRating} {plat.badge}
-                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-[10px] md:text-xs font-mono uppercase text-muted-foreground tracking-widest font-semibold opacity-60 italic">
+                        {plat.rawRating}
+                      </span>
+                      <span className={`inline-flex items-center gap-1.5 text-[9px] md:text-[10px] px-2.5 py-0.5 rounded-full border border-current/40 font-mono uppercase tracking-widest ${plat.color} bg-current/10 font-bold backdrop-blur-md shadow-[0_0_15px_rgba(0,0,0,0.1)] transition-transform group-hover:scale-105 duration-300`}>
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-current"></span>
+                        </span>
+                        {plat.badge}
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <BarChart className="w-5 h-5 md:w-6 md:h-6 text-muted-foreground group-hover:text-primary transition-colors opacity-40 group-hover:opacity-100" />
+                <BarChart className="w-5 h-5 md:w-6 md:h-6 text-muted-foreground group-hover:text-primary transition-all duration-500 opacity-20 group-hover:opacity-100 scale-90 group-hover:scale-100 relative z-10" />
               </motion.div>
             ))}
 

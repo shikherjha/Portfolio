@@ -154,35 +154,44 @@ export default function Competition() {
                         {platforms.map((plat: any, i: number) => (
                             <motion.div
                                 key={plat.name + accountView}
-                                className="flex flex-col justify-between p-6 rounded-2xl bg-card border border-border/80 hover:border-border transition-colors group cursor-default shadow-sm"
+                                className="flex flex-col justify-between p-7 rounded-2xl bg-card/40 backdrop-blur-md border border-border/40 hover:border-primary/30 transition-all duration-500 group cursor-default shadow-sm hover:shadow-2xl relative overflow-hidden"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 + i * 0.1 }}
                             >
-                                <div className="flex justify-between items-start mb-6">
+                                {/* Background Decorative Element */}
+                                <div className={`absolute -right-4 -top-4 w-24 h-24 rounded-full ${plat.bg} opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 blur-2xl`} />
+
+                                <div className="flex justify-between items-start mb-8 relative z-10">
                                     <h4 className="font-heading text-xl md:text-2xl font-medium tracking-tight group-hover:text-primary transition-colors">
                                         {plat.name}
                                     </h4>
-                                    <div className={`px-2.5 py-1 rounded-md bg-background border border-border text-xs font-mono font-bold ${plat.color}`}>
+                                    <div className={`px-3 py-1 rounded-full bg-background/60 backdrop-blur-sm border border-border/60 text-xs font-mono font-bold ${plat.color} shadow-sm group-hover:border-primary/20 transition-colors`}>
                                         {plat.score}
                                     </div>
                                 </div>
 
-                                <div className="flex items-center gap-4 mb-8">
-                                    <div className="text-4xl font-heading font-bold tracking-tighter">
+                                <div className="flex items-center gap-5 mb-8 relative z-10">
+                                    <div className="text-4xl md:text-5xl font-heading font-bold tracking-tighter text-foreground group-hover:scale-105 transition-transform duration-500">
                                         {plat.rawRating}
                                     </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">Index</span>
-                                        <span className={`text-xs font-mono font-bold uppercase tracking-widest ${plat.color}`}>{plat.badge}</span>
+                                    <div className="flex flex-col gap-1.5">
+                                        <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest leading-none font-semibold opacity-60">Global Rank</span>
+                                        <span className={`inline-flex items-center gap-1.5 text-[10px] px-3 py-1 rounded-full border border-current/30 font-mono font-bold uppercase tracking-widest ${plat.color} bg-current/10 backdrop-blur-md shadow-sm transition-all duration-300 group-hover:bg-current/15`}>
+                                            <span className="relative flex h-2 w-2">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-current"></span>
+                                            </span>
+                                            {plat.badge}
+                                        </span>
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col gap-3">
-                                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest block font-semibold">Latest Trajectory</span>
-                                    <div className="flex items-center gap-2 flex-wrap">
+                                <div className="flex flex-col gap-4 relative z-10">
+                                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest block font-bold opacity-50">Latest Performance</span>
+                                    <div className="flex items-center gap-2.5 flex-wrap">
                                         {plat.changes && plat.changes.map((change: any, idx: number) => (
-                                            <span key={idx} className={`text-xs font-mono px-2 py-1 rounded bg-background border border-border ${change.includes('+') ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                            <span key={idx} className={`text-[10px] font-mono px-2.5 py-1 rounded-lg bg-background/40 border border-border/60 backdrop-blur-sm shadow-sm transition-all duration-300 group-hover:border-border ${change.includes('+') ? 'text-emerald-500' : 'text-rose-500'}`}>
                                                 {change}
                                             </span>
                                         ))}
