@@ -1,92 +1,115 @@
 import { motion } from "framer-motion";
-import { Cpu, Network, Zap } from "lucide-react";
+import { useAudioEngine } from "@/hooks/useAudioEngine";
+import {
+  SiPython, SiGo, SiCplusplus, SiGnubash, SiLinux, SiGit,
+  SiFastapi, SiReact, SiDocker, SiRedis, SiAmazonwebservices,
+  SiPytorch, SiPandas, SiScikitlearn, SiLangchain,
+  SiKubernetes, SiPostgresql, SiMongodb, SiN8N, SiSupabase
+} from "react-icons/si";
 
-const systems = [
+const skillGroups = [
   {
-    title: "AI Systems",
-    icon: <Cpu className="w-6 h-6 text-primary" />,
-    capabilities: ["LLM Orchestration", "Agentic Workflows", "Vector Search Optimization"]
+    category: "Languages & Core",
+    skills: [
+      { name: "Python", icon: <SiPython className="w-5 h-5" /> },
+      { name: "C++", icon: <SiCplusplus className="w-5 h-5" /> },
+      { name: "Go", icon: <SiGo className="w-5 h-5" /> },
+      { name: "Bash", icon: <SiGnubash className="w-5 h-5" /> },
+      { name: "Git", icon: <SiGit className="w-5 h-5" /> },
+    ]
   },
   {
-    title: "Distributed Arch",
-    icon: <Network className="w-6 h-6 text-accent" />,
-    capabilities: ["Event-Driven Patterns", "High Availability", "Microservices"]
+    category: "Backend & Cloud",
+    skills: [
+      { name: "FastAPI", icon: <SiFastapi className="w-5 h-5" /> },
+      { name: "React", icon: <SiReact className="w-5 h-5" /> },
+      { name: "Docker", icon: <SiDocker className="w-5 h-5" /> },
+      { name: "AWS", icon: <SiAmazonwebservices className="w-5 h-5" /> },
+      { name: "Linux", icon: <SiLinux className="w-5 h-5" /> },
+      { name: "Kubernetes", icon: <SiKubernetes className="w-5 h-5" /> },
+    ]
   },
   {
-    title: "Optimization Engine",
-    icon: <Zap className="w-6 h-6 text-highlight" />,
-    capabilities: ["Latency Reduction", "Resource Allocation", "Algorithm Design"]
+    category: "Data & Storage",
+    skills: [
+      { name: "PostgreSQL", icon: <SiPostgresql className="w-5 h-5" /> },
+      { name: "MongoDB", icon: <SiMongodb className="w-5 h-5" /> },
+      { name: "Redis", icon: <SiRedis className="w-5 h-5" /> },
+      { name: "Supabase", icon: <SiSupabase className="w-5 h-5" /> },
+    ]
+  },
+  {
+    category: "AI & Automation",
+    skills: [
+      { name: "LangChain", icon: <SiLangchain className="w-5 h-5" /> },
+      { name: "PyTorch", icon: <SiPytorch className="w-5 h-5" /> },
+      { name: "Pandas", icon: <SiPandas className="w-5 h-5" /> },
+      { name: "n8n", icon: <SiN8N className="w-5 h-5" /> },
+      { name: "Scikit-Learn", icon: <SiScikitlearn className="w-5 h-5" /> },
+    ]
   }
 ];
 
+function SkillPill({ name, icon, index }: { name: string, icon: React.ReactNode, index: number }) {
+  const { triggerHoverSound } = useAudioEngine();
+
+  return (
+    <motion.div
+      className="group relative flex items-center gap-2 px-4 py-2.5 rounded-full bg-card/40 border border-border/50 hover:bg-card hover:border-border cursor-pointer overflow-hidden transition-all shadow-sm hover:shadow-[0_0_15px_hsla(var(--primary)/0.15)]"
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1, type: "spring", stiffness: 300 }}
+      whileHover={{ y: -2 }}
+      onHoverStart={() => triggerHoverSound()}
+    >
+      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="relative z-10 text-muted-foreground group-hover:text-primary transition-colors group-hover:rotate-12 group-hover:scale-110 duration-300">
+        {icon}
+      </div>
+      <span className="relative z-10 font-heading text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+        {name}
+      </span>
+    </motion.div>
+  );
+}
+
 export function SystemsSection() {
   return (
-    <section id="02-systems" className="w-full min-h-screen py-24 flex items-center">
-      <div className="container px-4 md:px-6 mx-auto">
-        <motion.div 
-          className="mb-16"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
+    <section id="side-b" className="w-full min-h-[50vh] py-24 flex items-center">
+      <div className="container px-4 md:px-6 mx-auto max-w-5xl">
+        <motion.div
+          className="mb-16 flex flex-col items-center text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
         >
-          <span className="text-sm font-medium uppercase tracking-widest text-primary opacity-80 block mb-2">
-            Track 02
+          <span className="text-sm font-mono uppercase tracking-widest text-primary opacity-80 block mb-4">
+            Side B — Studio Stack
           </span>
-          <h2 className="text-4xl md:text-5xl font-heading font-medium tracking-tight">
-            Systems Architecture
+          <h2 className="text-4xl md:text-6xl font-heading font-medium tracking-tight">
+            Instruments
           </h2>
         </motion.div>
 
-        {/* Abstract Mixing Board Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-          
-          {/* Connector Lines (Desktop) */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-border/30 -z-10" />
-
-          {systems.map((sys, idx) => (
+        <div className="flex flex-col gap-12 max-w-4xl mx-auto">
+          {skillGroups.map((group, gIdx) => (
             <motion.div
-              key={sys.title}
-              className="group relative bg-card border border-border rounded-xl p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] overflow-hidden"
-              initial={{ opacity: 0, y: 40 }}
+              key={group.category}
+              className="flex flex-col items-center gap-6"
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: idx * 0.2, type: "spring", stiffness: 50 }}
+              transition={{ delay: gIdx * 0.2 }}
             >
-              {/* Top Accent Glow on Hover */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <div className="mb-6 bg-secondary/50 w-12 h-12 rounded-lg flex items-center justify-center border border-border/50 group-hover:border-primary/30 transition-colors">
-                {sys.icon}
-              </div>
-              
-              <h3 className="text-xl font-heading font-medium mb-6 group-hover:text-primary transition-colors">
-                {sys.title}
+              <h3 className="text-xl font-heading text-muted-foreground/80 lowercase tracking-widest">
+                {group.category}
               </h3>
-              
-              <ul className="space-y-4">
-                {sys.capabilities.map((cap, cIdx) => (
-                  <li key={cIdx} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-border group-hover:bg-primary/50 transition-colors" />
-                    {cap}
-                  </li>
+              <div className="flex flex-wrap justify-center gap-4">
+                <div className="flex items-center text-sm font-mono text-muted-foreground/50 mr-2">inst.</div>
+                {group.skills.map((skill, sIdx) => (
+                  <SkillPill key={skill.name} name={skill.name} icon={skill.icon} index={sIdx} />
                 ))}
-              </ul>
-
-              {/* Minimal Schematic Visual */}
-              <div className="mt-10 h-24 w-full border border-dashed border-border/50 rounded flex flex-col items-center justify-center gap-2 opacity-50 group-hover:opacity-100 transition-opacity relative overflow-hidden">
-                 <div className="w-full h-px bg-border/50 absolute top-1/2 -translate-y-1/2 group-hover:bg-primary/20 transition-colors" />
-                 <motion.div 
-                   className="w-8 h-8 rounded bg-secondary border border-border z-10"
-                   whileHover={{ rotate: 90 }}
-                   transition={{ duration: 0.5 }}
-                 />
-                 <motion.div 
-                   className="absolute left-0 top-1/2 w-full h-[1px] bg-primary"
-                   initial={{ scaleX: 0, opacity: 0 }}
-                   whileInView={{ scaleX: 1, opacity: [0, 1, 0] }}
-                   transition={{ duration: 2, repeat: Infinity }}
-                 />
               </div>
             </motion.div>
           ))}

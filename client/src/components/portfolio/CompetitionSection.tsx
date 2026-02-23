@@ -1,128 +1,152 @@
 import { motion } from "framer-motion";
-import { ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, LineChart, Line, XAxis, Tooltip } from "recharts";
-
-const ratingData = [
-  { month: 'Jan', rating: 1500 },
-  { month: 'Feb', rating: 1650 },
-  { month: 'Mar', rating: 1600 },
-  { month: 'Apr', rating: 1800 },
-  { month: 'May', rating: 1950 },
-  { month: 'Jun', rating: 2100 },
-  { month: 'Jul', rating: 2250 },
-  { month: 'Aug', rating: 2200 },
-  { month: 'Sep', rating: 2350 },
-];
-
-const skillsData = [
-  { subject: 'DP', A: 90, fullMark: 100 },
-  { subject: 'Graphs', A: 85, fullMark: 100 },
-  { subject: 'Math', A: 95, fullMark: 100 },
-  { subject: 'Greedy', A: 80, fullMark: 100 },
-  { subject: 'Strings', A: 75, fullMark: 100 },
-];
-
-function Counter({ value, label }: { value: string, label: string }) {
-  return (
-    <motion.div 
-      className="flex flex-col gap-1"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-    >
-      <span className="text-4xl md:text-5xl font-heading font-medium text-foreground">{value}</span>
-      <span className="text-sm uppercase tracking-wider text-muted-foreground">{label}</span>
-    </motion.div>
-  );
-}
+import { BarChart, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 
 export function CompetitionSection() {
+  const { data, isLoading } = useQuery({
+    queryKey: ['cpStats', 'combined'],
+    queryFn: async () => {
+      const baseUrl = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${baseUrl}/api/cp-stats/aggregated?accountView=combined`);
+      if (!res.ok) throw new Error("Failed to fetch");
+      const json = await res.json();
+      localStorage.setItem("cpStats_combined", JSON.stringify(json));
+      return json;
+    },
+    initialData: () => {
+      const cached = localStorage.getItem("cpStats_combined");
+      if (cached) {
+        try { return JSON.parse(cached); } catch (e) { }
+      }
+      return undefined;
+    },
+    staleTime: 5 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
+    retry: 1
+  });
+
+  const overall = data?.overallStats;
+  const platforms = data?.platformReviews || [
+    { name: "Codeforces", score: "96%", rawRating: "2350 Elite", badge: "Expert", color: "text-amber-500" },
+    { name: "LeetCode", score: "92%", rawRating: "Top 1% Global", badge: "Knight", color: "text-emerald-500" },
+    { name: "AtCoder", score: "88%", rawRating: "1950 Dan", badge: "Kyu", color: "text-blue-500" },
+    { name: "CodeChef", score: "90%", rawRating: "5 Stars", badge: "4 Star", color: "text-purple-500" }
+  ];
+
   return (
-    <section id="04-competition" className="w-full min-h-screen py-24 flex flex-col justify-center">
-      <div className="container px-4 md:px-6 mx-auto">
-        <motion.div 
-          className="mb-16"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
+    <section id="charts" className="w-full min-h-screen py-24 flex flex-col justify-center relative transition-colors duration-1000">
+
+      <div className="container px-4 md:px-6 mx-auto max-w-6xl relative z-10">
+
+        {/* Section Header & CTA */}
+        <motion.div
+          className="mb-20 flex flex-col md:flex-row justify-between items-start md:items-end gap-8 relative"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <span className="text-sm font-medium uppercase tracking-widest text-primary opacity-80 block mb-2">
-            Track 04
-          </span>
-          <h2 className="text-4xl md:text-5xl font-heading font-medium tracking-tight">
-            Rhythm & Precision
-          </h2>
+          <div>
+            <span className="text-sm font-mono uppercase tracking-widest text-primary opacity-80 block mb-4 transition-all duration-1000">
+              Charts — Competitive Programming
+            </span>
+            <h2 className="text-4xl md:text-6xl font-heading font-medium tracking-tight mb-4">
+              Competitive Charts
+            </h2>
+            <p className="text-muted-foreground max-w-xl text-lg transition-colors duration-1000">
+              Performance index and global rankings compiled from the competitive programming arena.
+            </p>
+          </div>
+
+          <Link href="/competition">
+            <button className="group relative inline-flex items-center justify-center gap-3 px-6 py-3 font-medium rounded-full overflow-hidden transition-all duration-300 hover:bg-card border border-border/80 text-foreground hover:text-primary shadow-sm hover:shadow-md">
+              <span className="relative font-mono text-[10px] md:text-xs uppercase tracking-widest z-10">
+                Explore Full Rankings
+              </span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform z-10" />
+            </button>
+          </Link>
         </motion.div>
 
-        {/* Top Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 border-y border-border py-12">
-          <Counter value="2350" label="Current Rating" />
-          <Counter value="2410" label="Peak Rating" />
-          <Counter value="1,240+" label="Problems Solved" />
-          <Counter value="Top 1%" label="Global Rank" />
-        </div>
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-12">
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Line Graph */}
+          {/* Left: Headline Block ("Chart Position") */}
           <motion.div
-            className="bg-card border border-border p-6 rounded-xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            className="flex-1 flex flex-col justify-center"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ delay: 0.2 }}
           >
-            <h3 className="text-lg font-heading mb-6 text-muted-foreground">Rating Progression</h3>
-            <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={ratingData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
-                    itemStyle={{ color: 'hsl(var(--foreground))' }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="rating" 
-                    stroke="hsl(var(--accent))" 
-                    strokeWidth={2}
-                    dot={false}
-                    activeDot={{ r: 6, fill: 'hsl(var(--accent))', strokeWidth: 0 }}
-                    animationDuration={2000}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+            <div className="mb-12 md:mb-16">
+              <h3 className="text-7xl lg:text-[7rem] font-heading font-semibold tracking-tighter text-foreground mb-4 leading-none">
+                {isLoading ? "---" : (overall?.overallPercentile || "Top 3%")}
+              </h3>
+              <span className="text-amber-500 font-mono text-xs md:text-sm uppercase tracking-widest font-semibold flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]"></span>
+                Globally Across 5 Platforms
+              </span>
             </div>
+
+            {/* Billboard Style Metric Strip */}
+            <div className="w-full h-[1px] bg-border mb-8" />
+            <div className="flex flex-wrap gap-8 md:gap-12 lg:gap-16">
+              <div className="flex flex-col gap-2">
+                <span className="text-3xl md:text-4xl font-heading font-medium text-foreground">
+                  {isLoading ? "..." : (overall?.totalSolved?.toLocaleString() || "1,240")}
+                </span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-semibold">Total Solved</span>
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="text-3xl md:text-4xl font-heading font-medium text-foreground">
+                  {isLoading ? "..." : (overall?.activeDays || "42")}
+                </span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-semibold">Total Contests</span>
+              </div>
+            </div>
+            <div className="w-full h-[1px] bg-border mt-8" />
           </motion.div>
 
-          {/* Radar Chart */}
-          <motion.div
-            className="bg-card border border-border p-6 rounded-xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <h3 className="text-lg font-heading mb-6 text-muted-foreground">Algorithm Proficiency</h3>
-            <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="70%" data={skillsData}>
-                  <PolarGrid stroke="hsl(var(--border))" />
-                  <PolarAngleAxis dataKey="subject" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
-                  <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                  <Radar
-                    name="Skill"
-                    dataKey="A"
-                    stroke="hsl(var(--primary))"
-                    fill="hsl(var(--primary))"
-                    fillOpacity={0.3}
-                    animationDuration={2000}
-                  />
-                </RadarChart>
-              </ResponsiveContainer>
-            </div>
-          </motion.div>
-        </div>
+          {/* Right: Platform Ratings (Rotten Tomatoes Style) */}
+          <div className="flex-1 flex flex-col gap-4 w-full max-w-xl mx-auto lg:mx-0">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-2 block font-semibold px-2">
+              Critic Scores / Platform Reviews
+            </span>
 
+            {platforms.map((plat: any, i: number) => (
+              <motion.div
+                key={plat.name}
+                className="flex items-center justify-between p-4 md:p-6 rounded-xl bg-card border border-border/60 hover:border-primary/40 transition-colors group cursor-default shadow-sm hover:shadow-md"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+              >
+                <div className="flex items-center gap-6">
+                  {/* Score Badge */}
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-background border border-border flex items-center justify-center shadow-inner group-hover:border-primary/30 transition-colors">
+                    <span className={`text-xl md:text-2xl font-heading font-semibold ${plat.color}`}>
+                      {plat.score}
+                    </span>
+                  </div>
+
+                  {/* Platform Details */}
+                  <div className="flex flex-col justify-center gap-1">
+                    <h4 className="font-heading text-lg md:text-xl text-foreground font-medium group-hover:text-primary transition-colors leading-none">
+                      {plat.name}
+                    </h4>
+                    <span className="text-[10px] md:text-xs font-mono uppercase text-muted-foreground tracking-widest font-semibold">
+                      {plat.rawRating} {plat.badge}
+                    </span>
+                  </div>
+                </div>
+                <BarChart className="w-5 h-5 md:w-6 md:h-6 text-muted-foreground group-hover:text-primary transition-colors opacity-40 group-hover:opacity-100" />
+              </motion.div>
+            ))}
+
+          </div>
+
+        </div>
       </div>
     </section>
   );
