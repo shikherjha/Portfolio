@@ -9,7 +9,7 @@ export function Hero() {
       {/* Vignette */}
       <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
 
-      <div className="container px-4 md:px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+      <div className="container px-4 md:px-6 mx-auto max-w-6xl relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 xl:gap-24">
 
         {/* Left Content */}
         <div className="flex-1 flex flex-col items-start max-w-2xl">

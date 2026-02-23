@@ -290,7 +290,7 @@ export function ProjectsSection() {
           <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
 
             {/* Fixed Section Header */}
-            <div className="absolute top-16 left-12 md:top-24 md:left-24 z-30 pointer-events-none drop-shadow-md">
+            <div className="absolute top-16 left-6 md:top-24 md:left-12 lg:left-48 xl:left-64 z-30 pointer-events-none drop-shadow-md transition-all duration-500">
               <span className="text-sm font-mono uppercase tracking-widest text-primary opacity-80 block mb-2 md:mb-4">
                 Discography — Projects
               </span>
