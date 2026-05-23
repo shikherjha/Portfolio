@@ -14,7 +14,7 @@ function HomeContent() {
       <CustomCursor />
       <TrackList />
 
-      <main className="relative z-10 pt-24 lg:pt-0 lg:pl-16 xl:pl-20 transition-all duration-500">
+      <main className="relative z-10 pt-24 lg:pt-0 transition-all duration-500">
         <Hero />
         <IntroSection />
         <SystemsSection />

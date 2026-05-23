@@ -9,10 +9,10 @@ export function Hero() {
       {/* Vignette */}
       <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
 
-      <div className="container px-4 md:px-6 mx-auto max-w-6xl relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 xl:gap-24">
+      <div className="container px-4 md:px-6 lg:px-10 xl:px-6 mx-auto max-w-6xl relative z-10 flex flex-col xl:flex-row items-center justify-between gap-10 xl:gap-24">
 
         {/* Left Content */}
-        <div className="flex-1 flex flex-col items-start max-w-2xl">
+        <div className="flex-1 flex flex-col items-start max-w-2xl lg:pl-28 xl:pl-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ export function Hero() {
               Now Playing
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-medium tracking-tight text-foreground mb-6 leading-[1.1] uppercase">
+            <h1 className="text-5xl md:text-7xl lg:text-[clamp(4.5rem,8vw,6.5rem)] xl:text-8xl font-heading font-medium tracking-tight text-foreground mb-6 leading-[1.05] uppercase">
               SHIKHER JHA
             </h1>
 
@@ -62,7 +62,7 @@ export function Hero() {
 
         {/* Right Content - Waveform */}
         <motion.div
-          className="flex-1 hidden md:flex justify-end items-center"
+          className="flex-1 hidden xl:flex justify-end items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.5 }}

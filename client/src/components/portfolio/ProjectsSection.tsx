@@ -26,7 +26,7 @@ function AlbumTrack({ proj, index, isActive, isDesktop, slideWidth }: { proj: Pr
     return (
       <div style={desktopTrackStyle} className={`${isDesktop ? 'h-[100vh] flex-shrink-0' : 'w-full h-full'} flex flex-col items-center justify-center p-8`}>
         <div className="w-full max-w-5xl mx-auto flex flex-col items-center justify-center">
-          <Link href="/projects" className="group flex flex-col items-center justify-center p-12 lg:p-24 border border-border/20 shadow-2xl rounded-sm hover:border-primary/50 transition-colors bg-card/10 relative overflow-hidden w-full max-w-xl aspect-square md:aspect-video cursor-pointer">
+          <Link href="/projects" className={`group flex flex-col items-center justify-center ${isDesktop ? 'p-12 lg:p-24' : 'p-8 md:p-12'} border border-border/20 shadow-2xl rounded-sm hover:border-primary/50 transition-colors bg-card/10 relative overflow-hidden w-full max-w-xl aspect-square md:aspect-video cursor-pointer`}>
             <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out" />
             <span className="text-primary font-mono text-xs md:text-sm uppercase tracking-widest mb-4 z-10">
               Track 0{index + 1}
@@ -44,10 +44,10 @@ function AlbumTrack({ proj, index, isActive, isDesktop, slideWidth }: { proj: Pr
 
   return (
     <div style={desktopTrackStyle} className={`${isDesktop ? 'h-[100vh] flex-shrink-0' : 'w-full'} flex items-center justify-center`}>
-      <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center px-5 py-10 md:px-10 lg:px-8 xl:px-12 lg:pt-32 gap-10 lg:gap-12 xl:gap-20 max-w-[1280px] mx-auto overflow-hidden">
+      <div className={`w-full ${isDesktop ? 'h-full lg:flex-row lg:px-8 xl:px-12 lg:pt-40 lg:gap-12 xl:gap-20 max-w-[1280px] overflow-hidden' : 'max-w-5xl md:flex-row md:items-center md:justify-between md:gap-12'} flex flex-col items-center justify-center px-5 py-10 md:px-10 gap-10 mx-auto`}>
 
         {/* Left: Album Cover & Disc */}
-        <div className="relative w-full max-w-[260px] md:max-w-[340px] lg:max-w-[360px] xl:max-w-[460px] aspect-square flex-shrink-0 group">
+        <div className={`relative w-full ${isDesktop ? 'max-w-[380px] xl:max-w-[440px]' : 'max-w-[240px] md:max-w-[300px] lg:max-w-[340px]'} aspect-square flex-shrink-0 group`}>
 
           {/* Vinyl Disc (sits beneath cover and slides out) */}
           <motion.div
@@ -132,7 +132,7 @@ function AlbumTrack({ proj, index, isActive, isDesktop, slideWidth }: { proj: Pr
 
         {/* Right: Project Content Panel */}
         <motion.div
-          className="flex flex-col justify-center flex-1 min-w-0 max-w-xl text-left mt-8 md:mt-0 z-10"
+          className={`flex flex-col justify-center flex-1 min-w-0 max-w-xl ${isDesktop ? 'text-left mt-8 md:mt-0' : 'text-center items-center md:text-left md:items-start mt-2 md:mt-0'} z-10`}
           initial={{ opacity: 0, y: 30 }}
           animate={{
             opacity: isActive || !isDesktop ? 1 : 0.2,
@@ -151,7 +151,7 @@ function AlbumTrack({ proj, index, isActive, isDesktop, slideWidth }: { proj: Pr
             </span>
           </div>
 
-          <h3 className="text-4xl md:text-5xl lg:text-[clamp(2.75rem,4vw,4.75rem)] font-heading font-medium mb-4 md:mb-6 text-foreground tracking-tight leading-[0.98] text-balance break-words">
+          <h3 className={`${isDesktop ? 'text-4xl md:text-5xl lg:text-[clamp(2.75rem,4vw,4.75rem)]' : 'text-3xl md:text-4xl'} font-heading font-medium mb-4 md:mb-6 text-foreground tracking-tight leading-[0.98] text-balance break-words`}>
             {project.title}
           </h3>
 
@@ -165,7 +165,7 @@ function AlbumTrack({ proj, index, isActive, isDesktop, slideWidth }: { proj: Pr
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500/70 shadow-[0_0_8px_rgba(245,158,11,0.6)]"></span>
               Feat.
             </span>
-            <div className="flex flex-wrap gap-2 md:gap-3">
+            <div className={`flex flex-wrap gap-2 md:gap-3 ${isDesktop ? '' : 'justify-center md:justify-start'}`}>
               {project.tech.map((t: string) => (
                 <span key={t} className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-card/40 border border-border/50 text-xs md:text-sm font-medium text-foreground hover:bg-card hover:border-border transition-colors cursor-default shadow-sm backdrop-blur-sm">
                   {t}
@@ -190,15 +190,14 @@ function AlbumTrack({ proj, index, isActive, isDesktop, slideWidth }: { proj: Pr
 export function ProjectsSection() {
   const targetRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [isWideScreen, setIsWideScreen] = useState(true);
   const [slideWidth, setSlideWidth] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
-      const desktop = window.innerWidth >= 1024;
-      const sidebarOffset = window.innerWidth >= 1280 ? 80 : 64;
-      setIsDesktop(desktop);
-      setSlideWidth(desktop ? window.innerWidth - sidebarOffset : window.innerWidth);
+      const wide = window.innerWidth >= 1440 && window.innerHeight >= 850;
+      setIsWideScreen(wide);
+      setSlideWidth(window.innerWidth);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -222,7 +221,7 @@ export function ProjectsSection() {
   const smoothX = useSpring(xTranslate, { stiffness: 400, damping: 40, mass: 0.8 });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (!isDesktop) return;
+    if (!isWideScreen) return;
     const index = Math.round(latest * (allItems.length - 1));
     if (index !== activeIndex) {
       setActiveIndex(index);
@@ -232,9 +231,9 @@ export function ProjectsSection() {
   return (
     <section
       id="discography"
-      className={isDesktop ? "relative w-full" : "w-full py-24"}
+      className={isWideScreen ? "relative w-full" : "w-full py-24"}
     >
-      {isDesktop ? (
+      {isWideScreen ? (
         // DESKTOP: Vertical sliding, pinned container
         <div
           ref={targetRef}
@@ -289,7 +288,7 @@ export function ProjectsSection() {
         </div>
       ) : (
         // MOBILE: Stacking Vertical Layout (Standard Scroll)
-        <div className="container px-4 mx-auto overflow-x-hidden flex flex-col gap-32">
+        <div className="container px-4 md:px-6 mx-auto overflow-x-hidden flex flex-col gap-20 max-w-5xl">
           <div className="mb-0">
             <span className="text-sm font-mono uppercase tracking-widest text-primary opacity-80 block mb-3">
               Discography - Projects
@@ -299,7 +298,7 @@ export function ProjectsSection() {
             </h2>
           </div>
 
-          <div className="flex flex-col gap-48 mb-24">
+          <div className="flex flex-col gap-24 mb-24">
             {allItems.map((proj, idx) => (
               // Normal relative flow for mobile
               <AlbumTrack
