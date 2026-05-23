@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import {
   SiPython, SiGo, SiCplusplus, SiGnubash, SiLinux, SiGit,
-  SiFastapi, SiReact, SiDocker, SiRedis, SiAmazonwebservices,
-  SiPytorch, SiPandas, SiScikitlearn, SiLangchain,
-  SiKubernetes, SiPostgresql, SiMongodb, SiN8N, SiSupabase
+  SiFastapi, SiReact, SiDocker, SiRedis, SiAmazonwebservices, SiGooglecloud,
+  SiPytorch, SiScikitlearn, SiLangchain, SiOpentelemetry, SiHuggingface, SiCloudflare,
+  SiPostgresql, SiMongodb, SiN8N, SiGin, SiKubernetes,
+  SiRabbitmq, SiApachekafka, SiAmazonsqs, SiAmazons3
 } from "react-icons/si";
 
 const skillGroups = [
@@ -14,6 +15,8 @@ const skillGroups = [
       { name: "C++", icon: <SiCplusplus className="w-5 h-5" /> },
       { name: "Go", icon: <SiGo className="w-5 h-5" /> },
       { name: "Bash", icon: <SiGnubash className="w-5 h-5" /> },
+      { name: "React", icon: <SiReact className="w-5 h-5" /> },
+      { name: "Linux", icon: <SiLinux className="w-5 h-5" /> },
       { name: "Git", icon: <SiGit className="w-5 h-5" /> },
     ]
   },
@@ -21,10 +24,10 @@ const skillGroups = [
     category: "Backend & Cloud",
     skills: [
       { name: "FastAPI", icon: <SiFastapi className="w-5 h-5" /> },
-      { name: "React", icon: <SiReact className="w-5 h-5" /> },
+      { name: "Gin", icon: <SiGin className="w-5 h-5" /> },
       { name: "Docker", icon: <SiDocker className="w-5 h-5" /> },
       { name: "AWS", icon: <SiAmazonwebservices className="w-5 h-5" /> },
-      { name: "Linux", icon: <SiLinux className="w-5 h-5" /> },
+      { name: "GCP", icon: <SiGooglecloud className="w-5 h-5" /> },
       { name: "Kubernetes", icon: <SiKubernetes className="w-5 h-5" /> },
     ]
   },
@@ -34,7 +37,10 @@ const skillGroups = [
       { name: "PostgreSQL", icon: <SiPostgresql className="w-5 h-5" /> },
       { name: "MongoDB", icon: <SiMongodb className="w-5 h-5" /> },
       { name: "Redis", icon: <SiRedis className="w-5 h-5" /> },
-      { name: "Supabase", icon: <SiSupabase className="w-5 h-5" /> },
+      { name: "RabbitMQ", icon: <SiRabbitmq className="w-5 h-5" /> },
+      { name: "Kafka", icon: <SiApachekafka className="w-5 h-5" /> },
+      { name: "SQS", icon: <SiAmazonsqs className="w-5 h-5" /> },
+      { name: "S3", icon: <SiAmazons3 className="w-5 h-5" /> },
     ]
   },
   {
@@ -42,7 +48,9 @@ const skillGroups = [
     skills: [
       { name: "LangChain", icon: <SiLangchain className="w-5 h-5" /> },
       { name: "PyTorch", icon: <SiPytorch className="w-5 h-5" /> },
-      { name: "Pandas", icon: <SiPandas className="w-5 h-5" /> },
+      { name: "Hugging Face", icon: <SiHuggingface className="w-5 h-5" /> },
+      { name: "OpenTelemetry", icon: <SiOpentelemetry className="w-5 h-5" /> },
+      { name: "Cloudflare", icon: <SiCloudflare className="w-5 h-5" /> },
       { name: "n8n", icon: <SiN8N className="w-5 h-5" /> },
       { name: "Scikit-Learn", icon: <SiScikitlearn className="w-5 h-5" /> },
     ]
@@ -81,7 +89,7 @@ export function SystemsSection() {
           viewport={{ once: true }}
         >
           <span className="text-sm font-mono uppercase tracking-widest text-primary opacity-80 block mb-4">
-            Side B — Studio Stack
+            Side B - Studio Stack
           </span>
           <h2 className="text-4xl md:text-6xl font-heading font-medium tracking-tight">
             Instruments

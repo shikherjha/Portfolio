@@ -39,8 +39,8 @@ export function TrackList() {
   };
 
   return (
-    <nav className="fixed left-0 top-0 lg:left-8 lg:top-1/2 lg:-translate-y-1/2 z-40 w-full lg:w-32 bg-background/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-0 border-b lg:border-none border-border">
-      <div className="flex lg:flex-col gap-2 lg:gap-6 relative p-4 lg:p-0 overflow-x-auto no-scrollbar items-center lg:items-start">
+    <nav className="fixed left-0 top-0 lg:left-4 xl:left-6 lg:top-1/2 lg:-translate-y-1/2 z-40 w-full lg:w-auto bg-background/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-0 border-b lg:border-none border-border overflow-visible">
+      <div className="flex lg:flex-col gap-2 lg:gap-6 relative p-4 lg:p-0 overflow-x-auto lg:overflow-visible no-scrollbar items-center lg:items-start">
         {/* Fader Track Line (Desktop) */}
         <div className="hidden lg:block absolute left-[15px] top-2 bottom-2 w-[2px] bg-border/40 rounded-full" />
 
@@ -51,7 +51,7 @@ export function TrackList() {
               key={track.id}
               data-testid={`link-track-${track.id}`}
               onClick={() => scrollToTrack(track.id)}
-              className="group flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4 text-left relative shrink-0 min-w-[60px]"
+              className="group flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4 text-left relative shrink-0 min-w-[60px] lg:min-w-max"
             >
               {/* Fader Knob (Active) or Tick (Inactive) on Desktop */}
               <div className="hidden lg:flex relative w-8 h-8 items-center justify-center -ml-[3px]">

@@ -13,8 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY backend/ .
 
-# Railway provides the PORT environment variable
 ENV PORT=8000
 EXPOSE 8000
 
-CMD ["python", "main.py"]
+CMD ["python", "entrypoint.py"]

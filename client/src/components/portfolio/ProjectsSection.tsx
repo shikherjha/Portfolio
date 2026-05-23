@@ -2,61 +2,9 @@ import { useRef, useState, useEffect } from "react";
 import { useScroll, useTransform, useSpring, useMotionValueEvent, motion } from "framer-motion";
 import { Link } from "wouter";
 import { ChevronRight, ExternalLink } from "lucide-react";
+import { featuredProjects, type FeaturedProject } from "@/data/portfolio";
 
-const featuredProjects = [
-  {
-    id: "proj-1",
-    title: "Axon AI",
-    tag: "AI EDUCATION ENGINE",
-    year: "2025",
-    tech: ["Python", "FastAPI", "LangChain", "Redis", "PostgreSQL"],
-    color: "from-indigo-900/60 to-slate-950",
-    desc: "An integrated, agentic platform delivering personalized, explainable, and emotionally-aware AI education at scale.",
-    link: "https://axon-ai-frontend.vercel.app/"
-  },
-  {
-    id: "proj-2",
-    title: "Signal",
-    tag: "CURATED JOB FEED",
-    year: "2024",
-    tech: ["Go", "Python", "React", "PostgreSQL", "OpenAI"],
-    color: "from-amber-900/40 to-slate-950",
-    desc: "A high-signal, low-noise aesthetic job portal surfacing real, vetting hiring opportunities hidden behind inefficient systems.",
-    link: "https://getsig.in"
-  },
-  {
-    id: "proj-3",
-    title: "Multi-Tenant Provision Store",
-    tag: "K8S ORCHESTRATION",
-    year: "2024",
-    tech: ["Go", "FastAPI", "Kubernetes", "MedusaJS", "Helm"],
-    color: "from-emerald-900/40 to-slate-950",
-    desc: "Isolated namespace e-commerce orchestration engine inside Kubernetes with granular drift detection and routing.",
-    link: "https://github.com/shikherjha/Multi-tenant-provision-store"
-  },
-  {
-    id: "proj-4",
-    title: "AirShare",
-    tag: "ALGORITHMIC ROUTING",
-    year: "2024",
-    tech: ["Go", "PostgreSQL", "Redis", "Docker"],
-    color: "from-slate-800 to-slate-950",
-    desc: "Smart Airport Ride Pooling Backend grouping passengers into shared cabs while optimizing capacity constraints and dynamic pricing.",
-    link: "https://github.com/shikherjha/AirShare"
-  }
-];
-
-type ProjectItem = {
-  id: string;
-  title: string;
-  tag: string;
-  year: string;
-  tech: string[];
-  color: string;
-  desc: string;
-  link: string;
-  isFinal?: false;
-} | {
+type ProjectItem = FeaturedProject | {
   id: string;
   isFinal: true;
   title?: undefined;
@@ -70,12 +18,13 @@ type ProjectItem = {
 
 const allItems: ProjectItem[] = [...featuredProjects as ProjectItem[], { id: "full-discography", isFinal: true }];
 
-function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: number, isActive: boolean, isDesktop: boolean }) {
-  const isFinal = proj.isFinal;
+function AlbumTrack({ proj, index, isActive, isDesktop, slideWidth }: { proj: ProjectItem, index: number, isActive: boolean, isDesktop: boolean, slideWidth?: number }) {
+  const isFinal = "isFinal" in proj && proj.isFinal;
+  const desktopTrackStyle = isDesktop && slideWidth ? { width: slideWidth } : undefined;
 
   if (isFinal) {
     return (
-      <div className={`${isDesktop ? 'w-[100vw] h-[100vh] flex-shrink-0' : 'w-full h-full'} flex flex-col items-center justify-center p-8`}>
+      <div style={desktopTrackStyle} className={`${isDesktop ? 'h-[100vh] flex-shrink-0' : 'w-full h-full'} flex flex-col items-center justify-center p-8`}>
         <div className="w-full max-w-5xl mx-auto flex flex-col items-center justify-center">
           <Link href="/projects" className="group flex flex-col items-center justify-center p-12 lg:p-24 border border-border/20 shadow-2xl rounded-sm hover:border-primary/50 transition-colors bg-card/10 relative overflow-hidden w-full max-w-xl aspect-square md:aspect-video cursor-pointer">
             <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out" />
@@ -91,13 +40,14 @@ function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: nu
       </div>
     );
   }
+  const project = proj as FeaturedProject;
 
   return (
-    <div className={`${isDesktop ? 'w-[100vw] h-[100vh] flex-shrink-0' : 'w-full'} flex items-center justify-center`}>
-      <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center p-6 md:p-12 lg:pt-32 gap-12 lg:gap-24 max-w-[1400px] mx-auto overflow-hidden">
+    <div style={desktopTrackStyle} className={`${isDesktop ? 'h-[100vh] flex-shrink-0' : 'w-full'} flex items-center justify-center`}>
+      <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center px-5 py-10 md:px-10 lg:px-8 xl:px-12 lg:pt-32 gap-10 lg:gap-12 xl:gap-20 max-w-[1280px] mx-auto overflow-hidden">
 
         {/* Left: Album Cover & Disc */}
-        <div className="relative w-full max-w-[280px] md:max-w-[340px] lg:max-w-[420px] xl:max-w-[500px] aspect-square flex-shrink-0 group">
+        <div className="relative w-full max-w-[260px] md:max-w-[340px] lg:max-w-[360px] xl:max-w-[460px] aspect-square flex-shrink-0 group">
 
           {/* Vinyl Disc (sits beneath cover and slides out) */}
           <motion.div
@@ -146,7 +96,7 @@ function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: nu
 
           {/* Album Sleeve Cover (Static typography with cinematic styling) */}
           <motion.div
-            className={`absolute inset-0 z-10 rounded-sm shadow-2xl bg-gradient-to-br ${proj.color} border border-white/10 flex flex-col justify-between p-6 md:p-8 lg:p-10 overflow-hidden`}
+            className={`absolute inset-0 z-10 rounded-sm shadow-2xl bg-gradient-to-br ${project.color} border border-white/10 flex flex-col justify-between p-6 md:p-8 lg:p-10 overflow-hidden`}
             whileHover={isDesktop ? { y: -5, rotate: -1 } : {}}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
             style={{
@@ -162,16 +112,16 @@ function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: nu
                 Track 0{index + 1}
               </span>
               <span className="text-white/80 font-mono text-[10px] md:text-xs uppercase tracking-widest leading-none">
-                {proj.year}
+                {project.year}
               </span>
             </div>
 
             <div className="z-10 w-full mt-auto drop-shadow-md">
               <h4 className="text-3xl md:text-4xl lg:text-5xl font-heading font-semibold text-white/95 leading-[1.1] mb-2 md:mb-3">
-                {proj.title}
+                {project.title}
               </h4>
               <p className="text-white/60 text-[10px] md:text-xs font-mono uppercase tracking-widest opacity-80">
-                {proj.tag}
+                {project.tag}
               </p>
             </div>
 
@@ -182,7 +132,7 @@ function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: nu
 
         {/* Right: Project Content Panel */}
         <motion.div
-          className="flex flex-col justify-center flex-1 max-w-xl text-left mt-8 md:mt-0 z-10"
+          className="flex flex-col justify-center flex-1 min-w-0 max-w-xl text-left mt-8 md:mt-0 z-10"
           initial={{ opacity: 0, y: 30 }}
           animate={{
             opacity: isActive || !isDesktop ? 1 : 0.2,
@@ -195,18 +145,18 @@ function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: nu
             <span className="text-muted-foreground font-mono text-xs uppercase tracking-widest">
               Track 0{index + 1}
             </span>
-            <span className="text-muted-foreground/30">—</span>
+            <span className="text-muted-foreground/30">-</span>
             <span className="text-muted-foreground font-mono text-xs uppercase tracking-widest">
-              {proj.year}
+              {project.year}
             </span>
           </div>
 
-          <h3 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium mb-4 md:mb-6 text-foreground tracking-tight leading-none text-balance">
-            {proj.title}
+          <h3 className="text-4xl md:text-5xl lg:text-[clamp(2.75rem,4vw,4.75rem)] font-heading font-medium mb-4 md:mb-6 text-foreground tracking-tight leading-[0.98] text-balance break-words">
+            {project.title}
           </h3>
 
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 md:mb-12 max-w-lg">
-            {proj.desc}
+          <p className="text-base md:text-lg xl:text-xl text-muted-foreground leading-relaxed mb-8 md:mb-10 max-w-lg">
+            {project.desc}
           </p>
 
           {/* FEAT. Tech Stack (Amber styled) */}
@@ -216,7 +166,7 @@ function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: nu
               Feat.
             </span>
             <div className="flex flex-wrap gap-2 md:gap-3">
-              {proj.tech?.map((t: string) => (
+              {project.tech.map((t: string) => (
                 <span key={t} className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-card/40 border border-border/50 text-xs md:text-sm font-medium text-foreground hover:bg-card hover:border-border transition-colors cursor-default shadow-sm backdrop-blur-sm">
                   {t}
                 </span>
@@ -224,9 +174,9 @@ function AlbumTrack({ proj, index, isActive, isDesktop }: { proj: any, index: nu
             </div>
           </div>
 
-          <a href={proj.link} target="_blank" rel="noopener noreferrer" className="group relative flex items-center gap-3 text-foreground font-medium hover:text-primary transition-colors w-fit pb-1.5 md:pb-2 cursor-pointer">
+          <a href={project.link} target="_blank" rel="noopener noreferrer" className="group relative flex items-center gap-3 text-foreground font-medium hover:text-primary transition-colors w-fit pb-1.5 md:pb-2 cursor-pointer">
             <span className="relative z-10 flex items-center gap-2 text-sm md:text-base tracking-wide">
-              View Project <ExternalLink className="w-4 h-4 md:w-5 md:h-5 py-[1px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              Listen to the Track <ExternalLink className="w-4 h-4 md:w-5 md:h-5 py-[1px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </span>
             <span className="absolute bottom-0 left-0 w-full h-[1px] bg-foreground/20 group-hover:bg-primary transition-colors"></span>
           </a>
@@ -241,9 +191,15 @@ export function ProjectsSection() {
   const targetRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(true);
+  const [slideWidth, setSlideWidth] = useState(0);
 
   useEffect(() => {
-    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    const handleResize = () => {
+      const desktop = window.innerWidth >= 1024;
+      const sidebarOffset = window.innerWidth >= 1280 ? 80 : 64;
+      setIsDesktop(desktop);
+      setSlideWidth(desktop ? window.innerWidth - sidebarOffset : window.innerWidth);
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -262,7 +218,7 @@ export function ProjectsSection() {
     const index = Math.round(p / step);
     return index * step;
   });
-  const xTranslate = useTransform(snapProgress, [0, 1], ["0vw", `-${(allItems.length - 1) * 100}vw`]);
+  const xTranslate = useTransform(snapProgress, [0, 1], [0, -((allItems.length - 1) * Math.max(slideWidth, 1))]);
   const smoothX = useSpring(xTranslate, { stiffness: 400, damping: 40, mass: 0.8 });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
@@ -292,7 +248,7 @@ export function ProjectsSection() {
             {/* Fixed Section Header */}
             <div className="absolute top-16 left-6 md:top-24 md:left-12 lg:left-48 xl:left-64 z-30 pointer-events-none drop-shadow-md transition-all duration-500">
               <span className="text-sm font-mono uppercase tracking-widest text-primary opacity-80 block mb-2 md:mb-4">
-                Discography — Projects
+                Discography - Projects
               </span>
               <h2 className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-heading font-medium tracking-tight text-foreground/90">
                 Featured Tracks
@@ -308,6 +264,7 @@ export function ProjectsSection() {
                   index={idx}
                   isActive={activeIndex === idx}
                   isDesktop={true}
+                  slideWidth={slideWidth}
                 />
               ))}
             </motion.div>
@@ -335,7 +292,7 @@ export function ProjectsSection() {
         <div className="container px-4 mx-auto overflow-x-hidden flex flex-col gap-32">
           <div className="mb-0">
             <span className="text-sm font-mono uppercase tracking-widest text-primary opacity-80 block mb-3">
-              Discography — Projects
+              Discography - Projects
             </span>
             <h2 className="text-4xl md:text-5xl font-heading font-medium tracking-tight">
               Featured Tracks

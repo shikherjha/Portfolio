@@ -34,7 +34,7 @@ export function Hero() {
             </div>
 
             <div className="p-4 rounded-xl bg-card border border-border/30 text-sm text-muted-foreground max-w-md mb-10">
-              Currently composing scalable AI systems & solving hard problems.
+              Currently composing scalable backend infra, AI systems & solving hard problems.
             </div>
 
             <div className="flex flex-wrap gap-4">
